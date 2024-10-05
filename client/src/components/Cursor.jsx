@@ -1,22 +1,23 @@
-import * as React from "react";
-import { usePerfectCursor } from "../hooks/usePerfectCursor";
+// components/Cursor
+
+import * as React from "react"
+import { usePerfectCursor } from "../hooks/usePerfectCursor"
 
 export function Cursor({ point }) {
-  const rCursor = React.useRef(null);
+  const rCursor = React.useRef(null)
 
   const animateCursor = React.useCallback((point) => {
-    console.log("AnimateCursor called with point: ", point); // Added log
-    const elm = rCursor.current;
-    if (!elm) return;
-    elm.style.setProperty("transform", `translate(${point[0]}px, ${point[1]}px)`);
-  }, []);
+    const elm = rCursor.current
+    if (!elm) return
+    elm.style.setProperty(
+      "transform",
+      `translate(${point[0]}px, ${point[1]}px)`
+    )
+  }, [])
 
-  const onPointMove = usePerfectCursor(animateCursor, point);
+  const onPointMove = usePerfectCursor(animateCursor)
 
-  React.useLayoutEffect(() => {
-    console.log("useLayoutEffect called with point: ", point); // Added log
-    onPointMove(point);
-  }, [onPointMove, point]); // Add point as a dependency
+  React.useLayoutEffect(() => onPointMove(point), [onPointMove, point])
 
   return (
     <svg
@@ -46,5 +47,5 @@ export function Cursor({ point }) {
         <path d="m13 10.814v11.188l2.969-2.866.428-.139h4.768z" />
       </g>
     </svg>
-  );
+  )
 }
